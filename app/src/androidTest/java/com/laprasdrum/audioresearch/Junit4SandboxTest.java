@@ -17,16 +17,21 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.laprasdrum.audioresearch.helper.BookTestHelper.JUnitPracticeBook;
 import static com.laprasdrum.audioresearch.matcher.IsDate.dateOf;
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.lessThan;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assume.assumeTrue;
 import static org.junit.matchers.JUnitMatchers.hasItems;
+import static org.mockito.Mockito.*;
 
 @RunWith(Enclosed.class)
 //@RunWith(AndroidJUnit4.class)
@@ -176,7 +181,7 @@ public class Junit4SandboxTest {
             public TemporaryFolder tempFolder = new TemporaryFolder();
 
             @Before
-            public void setUp() throws Exception{
+            public void setUp() throws Exception {
                 super.setUp();
                 injectInstrumentation(InstrumentationRegistry.getInstrumentation());
                 activity = getActivity();
@@ -266,4 +271,97 @@ public class Junit4SandboxTest {
             assertThat(sut.date, is(CoreMatchers.sameInstance(current)));
         }
     }
+
+    public static class RandomFactorTest {
+
+        @Test
+        public void returnAusingChoice() {
+            List<String> options = new ArrayList<>();
+            options.add("A");
+            options.add("B");
+            Randoms sut = new Randoms();
+
+            // create stub
+            // random number must be 0
+            sut.generator = new RandomNumberGenerator() {
+                @Override
+                public int nextInt() {
+                    return 0;
+                }
+            };
+
+            assertThat(sut.choice(options), is("A"));
+        }
+
+        @Test
+        public void returnBusingChoice() {
+            List<String> options = new ArrayList<>();
+            options.add("A");
+            options.add("B");
+            Randoms sut = new Randoms();
+
+            // create stub
+            // random number must be 1
+            sut.generator = new RandomNumberGenerator() {
+                @Override
+                public int nextInt() {
+                    return 1;
+                }
+            };
+
+            assertThat(sut.choice(options), is("B"));
+        }
+
+        @Test
+        public void checkWhetherIfNextIntIsCalled() {
+            List<String> options = new ArrayList<>();
+            options.add("A");
+            options.add("B");
+            Randoms sut = new Randoms();
+
+            // create mock without library
+            // What we expect is nextInt() method calling
+            final AtomicBoolean isCallNextIntMethod = new AtomicBoolean(false);
+            sut.generator = new RandomNumberGenerator() {
+                @Override
+                public int nextInt() {
+                    isCallNextIntMethod.set(true);
+                    return 0;
+                }
+            };
+
+            assertThat(sut.choice(options), is("A"));
+            assertThat(isCallNextIntMethod.get(), is(true));
+        }
+    }
+
+    public static class MockitoTests {
+        @Test(expected = IndexOutOfBoundsException.class)
+        public void throwException() {
+            List stub = mock(List.class);
+            when(stub.get(0)).thenReturn("Hello");
+            when(stub.get(1)).thenReturn("World");
+            when(stub.get(2)).thenThrow(new IndexOutOfBoundsException());
+
+            stub.get(2);
+        }
+
+        @Test
+        public void checkWhetherIfNextIntIsCalled() {
+            List<String> options = new ArrayList<>();
+            options.add("A");
+            options.add("B");
+            Randoms sut = new Randoms();
+
+            // create mock with mockito
+            RandomNumberGenerator mock = mock(RandomNumberGenerator.class);
+            when(mock.nextInt()).thenReturn(1);
+            sut.generator = mock;
+
+            assertThat(sut.choice(options), is("B"));
+            verify(mock).nextInt();
+        }
+
+    }
 }
+
