@@ -1,4 +1,4 @@
-package com.laprasdrum.audioresearch;
+package com.laprasdrum.audioresearch.random;
 
 public interface RandomNumberGenerator {
     int nextInt();

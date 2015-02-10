@@ -1,4 +1,4 @@
-package com.laprasdrum.audioresearch;
+package com.laprasdrum.audioresearch.random;
 
 import java.util.List;
 
