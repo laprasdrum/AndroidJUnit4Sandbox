@@ -1,4 +1,4 @@
-package com.laprasdrum.audioresearch;
+package com.laprasdrum.androidjunit4;
 
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import com.laprasdrum.audioresearch.R;
 
 
 public class MainActivity extends ActionBarActivity {

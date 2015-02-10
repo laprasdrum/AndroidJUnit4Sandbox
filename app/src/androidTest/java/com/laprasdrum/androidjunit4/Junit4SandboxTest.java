@@ -1,12 +1,15 @@
-package com.laprasdrum.audioresearch;
+package com.laprasdrum.androidjunit4;
 
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.ActivityInstrumentationTestCase2;
-import com.laprasdrum.audioresearch.date.*;
-import com.laprasdrum.audioresearch.random.RandomNumberGenerator;
-import com.laprasdrum.audioresearch.random.Randoms;
+import com.laprasdrum.androidjunit4.date.*;
+import com.laprasdrum.androidjunit4.helper.BookTestHelper;
+import com.laprasdrum.androidjunit4.matcher.IsDate;
+import com.laprasdrum.androidjunit4.random.RandomNumberGenerator;
+import com.laprasdrum.androidjunit4.random.Randoms;
 import org.hamcrest.CoreMatchers;
+import org.hamcrest.Matchers;
 import org.junit.*;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.experimental.theories.DataPoints;
@@ -23,8 +26,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static com.laprasdrum.audioresearch.helper.BookTestHelper.JUnitPracticeBook;
-import static com.laprasdrum.audioresearch.matcher.IsDate.dateOf;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -79,14 +80,14 @@ public class Junit4SandboxTest {
         @Ignore
         @Test
         public void testShouldBeSameDateValue() {
-            assertThat(new Date(), is(dateOf(2015, 2, 4)));
+            assertThat(new Date(), Matchers.is(IsDate.dateOf(2015, 2, 4)));
         }
     }
 
     public static class BookStoreTests {
         @Test
         public void testShouldLowerThan4000Yen() {
-            Book junitBook = JUnitPracticeBook();
+            Book junitBook = BookTestHelper.JUnitPracticeBook();
             assertThat(junitBook.price, is(lessThan(4000)));
         }
     }

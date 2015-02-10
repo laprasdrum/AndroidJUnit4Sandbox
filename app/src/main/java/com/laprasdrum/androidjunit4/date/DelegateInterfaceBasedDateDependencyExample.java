@@ -1,10 +1,10 @@
-package com.laprasdrum.audioresearch.date;
+package com.laprasdrum.androidjunit4.date;
 
 import java.util.Date;
 
-public class DelegateObjectBasedDateDependencyExample {
+public class DelegateInterfaceBasedDateDependencyExample {
     public Date date = new Date();
-    public DateFactory dataFactory = new DateFactory();
+    public DateFactoryInterface dataFactory = new DateFactoryImpl();
 
     /**
      * テスト対象となるコードを Override 可能なオブジェクトにする

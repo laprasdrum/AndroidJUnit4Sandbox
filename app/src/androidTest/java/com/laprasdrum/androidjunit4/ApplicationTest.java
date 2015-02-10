@@ -1,4 +1,4 @@
-package com.laprasdrum.audioresearch;
+package com.laprasdrum.androidjunit4;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

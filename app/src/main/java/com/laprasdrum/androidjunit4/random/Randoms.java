@@ -1,4 +1,4 @@
-package com.laprasdrum.audioresearch.random;
+package com.laprasdrum.androidjunit4.random;
 
 import java.util.List;
 

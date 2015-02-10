@@ -1,6 +1,6 @@
-package com.laprasdrum.audioresearch.helper;
+package com.laprasdrum.androidjunit4.helper;
 
-import com.laprasdrum.audioresearch.Book;
+import com.laprasdrum.androidjunit4.Book;
 
 public class BookTestHelper {
     public static Book JUnitPracticeBook() {

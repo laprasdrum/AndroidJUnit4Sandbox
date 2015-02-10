@@ -1,4 +1,4 @@
-package com.laprasdrum.audioresearch.matcher;
+package com.laprasdrum.androidjunit4.matcher;
 
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
